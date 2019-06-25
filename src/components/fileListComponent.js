@@ -1,26 +1,26 @@
 import React, { useState, useEffect } from 'react';
+
 import axios from 'axios';
 
 const FileListComponent = () => {
-  const [files, setFiles] = useState({ files: [] });
+  let [files, setFiles] = useState([]);
 
   useEffect(async () => {
-    const result = await axios(
-      'http://hn.algolia.com/api/v1/search?query=redux',
-    );
-
-    setFiles(result.data);
-  });
+      const result = await axios.get('http://localhost:3002/files')
+      console.log(result)
+      console.log("fds");
+      setFiles(result);
+  }, []);
 
   return (
     <ul>
-      {files.map(file => (
+      {files.map(file => {
         <li key={file.objectID}>
           <a href={file.fileName}>{file.fileTitle}</a>
         </li>
-      ))}
+      })}
     </ul>
   );
 }
 
-export default FileListComponent
+export default FileListComponent;
