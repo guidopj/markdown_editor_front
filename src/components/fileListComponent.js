@@ -1,62 +1,35 @@
-/*import React, { useState, useEffect } from 'react';
 
-import axios from 'axios';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
+import Divider from '@material-ui/core/Divider';
+import InboxIcon from '@material-ui/icons/Inbox';
+import React from 'react';
 
-const FileListComponent = () => {
-  const [files, setFiles] = useState([]);
 
-  useEffect(async () => (
-      const result = await axios.get('http://localhost:3002/files')
-      console.log(result)
-      console.log("fds");
-      setFiles(result);
-  }, []);
+const FileListComponent = (props) => {
 
-  return (
-    <div>
-    <ul>
-      {files.map(file => {
-        <li key={file.objectID}>
-          <a href={file.fileName}>{file.fileTitle}</a>
-        </li>
-      })}
-    </ul>
-    </div>
-  );
-}
-
-export default FileListComponent;
-
-*/
-
-const baseURL = 'http://localhost:3003'
-
-//import React, { useState, useEffect } from 'react';
-//import axios from 'axios';
-
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-
-function FileListComponent() {
-  const [data, setData] = useState( [] );
-
-  useEffect(async () => {
-    const result = await axios(
-      `${baseURL}/files`,
-    );
-    console.log("result")
-    console.log(result.data.result)
-    setData(result.data.result);
-  }, []);
+  const handleToggle = (id) => {
+    props.setFileShown(props.data.filter(file => file.objectID === id))
+  }
 
   return (
     <ul>
-      {data.map(item => (
+      <List component="nav" aria-label="Main mailbox folders">
+      {props.data && props.data.map(item => (
         <li key={item.objectID}>
-          <a href={item.objectID}>{item.fileName}</a>
+          <ListItem button onClick={handleToggle(item.objectID)}>
+            <ListItemIcon>
+              <InboxIcon />
+            </ListItemIcon>
+            <ListItemText primary={item.fileName} />
+          </ListItem>
         </li>
       ))}
-    </ul>
+    <Divider />
+    </List>
+  </ul>
   );
 }
 
