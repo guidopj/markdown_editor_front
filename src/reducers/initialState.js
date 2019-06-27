@@ -1,7 +1,5 @@
 const initialState = {
-  files: {
-    markdownFiles: [],    
-  }
+  markdownFiles: []
 };
   
   export default initialState;

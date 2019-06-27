@@ -10,16 +10,12 @@ import React from 'react';
 
 const FileListComponent = (props) => {
 
-  const handleToggle = (id) => {
-    props.setFileShown(props.data.filter(file => file.objectID === id))
-  }
-
   return (
     <ul>
       <List component="nav" aria-label="Main mailbox folders">
       {props.data && props.data.map(item => (
         <li key={item.objectID}>
-          <ListItem button onClick={handleToggle(item.objectID)}>
+          <ListItem button>
             <ListItemIcon>
               <InboxIcon />
             </ListItemIcon>

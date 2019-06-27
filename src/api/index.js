@@ -7,5 +7,24 @@ export const API = {
             `${baseURL}/files`,
           );
         return result
+    },
+    async createMarkdownFile(file) {
+        axios.post('/file', file)
+            .then((response) => {
+                return file
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+    },
+
+    async editMarkdownFile(file){
+        axios.put('/file/' + file.objectID, file)
+        .then(function (response) {
+            return file
+        })
+        .catch(function (error) {
+            console.log(error)
+        })
     }
 }
