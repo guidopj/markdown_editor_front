@@ -6,6 +6,7 @@ import './App.css';
 import * as markdownFilesActions from './actions/markdownFilesActions'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
+import  NewFile  from './components/newFile'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -58,7 +59,7 @@ const App = (props) => {
           <h2> MarkDown Editor</h2>
         </Grid>
         <Grid item xs={3}>
-          <FileListComponent data={props.markdownFiles.markdownFiles} className={classes.fileList}/>
+          <FileListComponent deleteFile={props.markdownFilesActions.deleteMarkdownFile} data={props.markdownFilesList} className={classes.fileList}/>
         </Grid>
         <NewFile createFile={props.markdownFilesActions.createMarkdownFile}/>
       </Grid>
@@ -78,7 +79,7 @@ const App = (props) => {
 }
 
 const mapStateToProps = state => ({
-    markdownFiles: state.markdownFiles,
+    markdownFilesList: state.markdownFiles.markdownFiles,
 });
 
 function mapDispatchToProps (dispatch) {

@@ -2,7 +2,11 @@ import {
     FETCH_MARKDOWN_FILES_FAILURE, 
     FETCH_MARKDOWN_FILES_SUCCESS,
     CREATE_MARKDOWN_FILE_FAILURE,
-    CREATE_MARKDOWN_FILE_SUCCESS
+    CREATE_MARKDOWN_FILE_SUCCESS,
+    EDIT_MARKDOWN_FILE_FAILURE,
+    EDIT_MARKDOWN_FILE_SUCCESS,
+    DELETE_MARKDOWN_FILE_FAILURE,
+    DELETE_MARKDOWN_FILE_SUCCESS
     } from '../actions/types';
   import initialState from './initialState';
   
@@ -23,7 +27,7 @@ import {
         case CREATE_MARKDOWN_FILE_SUCCESS:
         return {
             ...state,
-            markdownFiles: [...markdownFiles, action.payload],
+            markdownFiles: [...state.markdownFiles, action.payload],
         };
 
         case CREATE_MARKDOWN_FILE_FAILURE:
@@ -32,6 +36,36 @@ import {
             error: action.payload,
         };
 
+        case EDIT_MARKDOWN_FILE_SUCCESS:
+            const ids = state.markdownFiles.map((service) => {
+                return service._id;
+            });
+            const indexToModif = ids.indexOf(action.payload.markdownFiles._id)
+            const newState = {...state}
+            newState.items[indexToModif] = action.payload.markdownFiles;
+        return {
+            ...state,
+            markdownFiles: newState.markdownFiles.slice()
+        };
+
+        case EDIT_MARKDOWN_FILE_FAILURE:
+        return {
+            ...state,
+            error: action.payload,
+        };
+
+        case DELETE_MARKDOWN_FILE_SUCCESS:
+        return {
+            ...state,
+            markdownFiles: state.markdownFiles.filter(item => item._id !== action.payload._id),
+        };
+
+        case DELETE_MARKDOWN_FILE_FAILURE:
+        return {
+            ...state,
+            error: action.payload,
+        };
+        
         default:
         return state;
     }

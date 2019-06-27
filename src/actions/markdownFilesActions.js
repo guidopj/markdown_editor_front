@@ -2,7 +2,11 @@ import {
     FETCH_MARKDOWN_FILES_SUCCESS,
     FETCH_MARKDOWN_FILES_FAILURE,
     CREATE_MARKDOWN_FILE_FAILURE,
-    CREATE_MARKDOWN_FILE_SUCCESS
+    CREATE_MARKDOWN_FILE_SUCCESS,
+    EDIT_MARKDOWN_FILE_FAILURE,
+    EDIT_MARKDOWN_FILE_SUCCESS,
+    DELETE_MARKDOWN_FILE_FAILURE,
+    DELETE_MARKDOWN_FILE_SUCCESS
     } from './types';
   
   
@@ -58,8 +62,7 @@ import {
     return async (dispatch) => {
       try {
         const data = await API.createMarkdownFile(file);
-        console.log(data)
-        dispatch(createMarkdownFileSuccess(data));
+        dispatch(createMarkdownFileSuccess(data.data.file));
       } catch (error) {
         dispatch(createMarkdownFileFailure(error));
       }
@@ -88,10 +91,40 @@ import {
     return async (dispatch) => {
       try {
         const data = await API.editMarkdownFile(file);
-        console.log(data)
         dispatch(editMarkdownFileSuccess(data));
       } catch (error) {
         dispatch(editMarkdownFileFailure(error));
+      }
+    }
+  }
+
+  // Actions Creators
+  function deleteMarkdownFileFailure (error) {
+    return {
+      type: DELETE_MARKDOWN_FILE_FAILURE,
+      payload: error
+    };
+  }
+  
+  // Actions Creators
+  function deleteMarkdownFileSuccess (file) {
+    return {
+      type: DELETE_MARKDOWN_FILE_SUCCESS,
+      payload: file
+    };
+  }
+
+  /* DELETE MARKDOWN FILE */
+  
+  export function deleteMarkdownFile(file){
+    console.log("a borrar")
+    console.log(file)
+    return async (dispatch) => {
+      try {
+        await API.deleteMarkdownFile(file);
+        dispatch(deleteMarkdownFileSuccess(file));
+      } catch (error) {
+        dispatch(deleteMarkdownFileFailure(error));
       }
     }
   }

@@ -1,7 +1,8 @@
+import React, { useState, useEffect  } from 'react';
+import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
-import * as markdownFilesActions from './actions/markdownFilesActions'
 
 const useStyles = makeStyles(theme => ({
     button: {
@@ -16,16 +17,19 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const NewFile = (props) => {
-    const [fileName, setFileName] = useState("");
+
+    const [name, setName] = useState("");
+
     const addFile = () => {
         const file = {
-            fileName,
+            fileName:name,
             fileTitle: "",
             fileDescription: ""
         }
         
         props.createFile(file);
     }
+    
     const classes = useStyles();
     return (
         <Grid container xs={6}>
@@ -34,8 +38,8 @@ const NewFile = (props) => {
             label="Name"
             className={classes.textField}
             margin="normal"
-            value={fileName}
-            onChange={setFileName}
+            value={name}
+            onChange={(e) => setName(e.target.value)}
           />
           <Button onClick={addFile} variant="contained" color="primary" className={classes.button}>
             Add File
