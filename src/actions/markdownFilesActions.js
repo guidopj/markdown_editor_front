@@ -91,7 +91,7 @@ import {
     return async (dispatch) => {
       try {
         const data = await API.editMarkdownFile(file);
-        dispatch(editMarkdownFileSuccess(data));
+        dispatch(editMarkdownFileSuccess(data.data.file));
       } catch (error) {
         dispatch(editMarkdownFileFailure(error));
       }
@@ -117,8 +117,6 @@ import {
   /* DELETE MARKDOWN FILE */
   
   export function deleteMarkdownFile(file){
-    console.log("a borrar")
-    console.log(file)
     return async (dispatch) => {
       try {
         await API.deleteMarkdownFile(file);

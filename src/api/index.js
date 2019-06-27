@@ -13,15 +13,8 @@ export const API = {
         return axios.post(`${baseURL}/file`, file);
     },
 
-
     async editMarkdownFile(file){
-        axios.put(`${baseURL}/file/${file.objectID}`, file)
-        .then(function (response) {
-            return response
-        })
-        .catch(function (error) {
-            console.log(error)
-        })
+        return axios.put(`${baseURL}/file/${file._id}`,file)
     },
     async deleteMarkdownFile(file){
         axios.delete(`${baseURL}/file/${file._id}`)

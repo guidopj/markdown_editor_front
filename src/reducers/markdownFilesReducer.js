@@ -40,9 +40,9 @@ import {
             const ids = state.markdownFiles.map((service) => {
                 return service._id;
             });
-            const indexToModif = ids.indexOf(action.payload.markdownFiles._id)
+            const indexToModif = ids.indexOf(action.payload._id)
             const newState = {...state}
-            newState.items[indexToModif] = action.payload.markdownFiles;
+            newState.markdownFiles[indexToModif] = action.payload;
         return {
             ...state,
             markdownFiles: newState.markdownFiles.slice()

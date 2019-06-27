@@ -7,8 +7,8 @@ import * as markdownFilesActions from './actions/markdownFilesActions'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import  NewFile  from './components/newFile'
-import InputLabel from '@material-ui/core/InputLabel';
-import Textarea from 'react-expanding-textarea'
+import  EditFile  from './components/editFile'
+import _ from 'lodash'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -25,11 +25,6 @@ const useStyles = makeStyles(theme => ({
     marginLeft: theme.spacing(1),
     marginRight: theme.spacing(1),
     width: 200,
-  },
-
-  textArea:{
-    height:300,
-    width:"90%"
   },
 
   label: {
@@ -55,7 +50,6 @@ const App = (props) => {
     fetchData();
   }, []);
   
-  const [textAreaValue, setTextAreaValue] = useState("");
   const [fileShown, setFileShown] = useState({});
 
   const classes = useStyles();
@@ -72,24 +66,22 @@ const App = (props) => {
               <FileListComponent deleteFile={props.markdownFilesActions.deleteMarkdownFile}
                                  data={props.markdownFilesList}
                                  className={classes.fileList}
-                                 setTextAreaValue={setTextAreaValue}
                                  setFileShown={setFileShown}/>
             </Grid>
-              <Grid item xs={4}>
-                <Textarea value={textAreaValue} className={classes.textArea}
-                  onChange={e => setTextAreaValue(e.target.value)}/>
-              </Grid>
-              <Grid item xs={3} className={classes.label}>
-                <label>{textAreaValue}</label>
-              </Grid>
-              <Grid item xs={3}>
+            
+            {!_.isEmpty(fileShown) ? <EditFile  editFile={props.markdownFilesActions.editMarkdownFile} 
+                                                fileShown={fileShown} /> : ''}
+                
+              <Grid item xs={6}>
                 <NewFile createFile={props.markdownFilesActions.createMarkdownFile}/>
               </Grid>
+
             </Grid>
           </Grid>
     </div>
   );
 }
+
 
 const mapStateToProps = state => ({
     markdownFilesList: state.markdownFiles.markdownFiles,

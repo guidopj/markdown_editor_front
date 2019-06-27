@@ -26,7 +26,6 @@ const FileListComponent = (props) => {
 
   const changeFileShown = (item) => {
     props.setFileShown(item)
-    props.setTextAreaValue(item.fileDescription)
   }
 
   return (
@@ -38,7 +37,7 @@ const FileListComponent = (props) => {
             <ListItemIcon>
               <InboxIcon />
             </ListItemIcon>
-            <ListItemText primary={item.fileTitle} />
+            <ListItemText primary={item.fileName} />
           </ListItem>
           <DeleteButton item={item} deleteFile={props.deleteFile}/>
         </li>
