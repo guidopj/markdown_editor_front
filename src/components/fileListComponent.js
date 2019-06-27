@@ -12,8 +12,6 @@ import React from 'react';
 const DeleteButton = (props) => {
 
   const handleDelete = () => {
-    console.log("handledleete")
-    console.log(props.item)
     props.deleteFile(props.item)
   }
 
@@ -26,21 +24,26 @@ const DeleteButton = (props) => {
 
 const FileListComponent = (props) => {
 
+  const changeFileShown = (item) => {
+    props.setFileShown(item)
+    props.setTextAreaValue(item.fileDescription)
+  }
+
   return (
     <ul>
       <List component="nav" aria-label="Main">
       {props.data && props.data.map(item => (
         <li key={item._id}>
-          <ListItem button>
+          <ListItem button onClick={() => changeFileShown(item)}>
             <ListItemIcon>
               <InboxIcon />
             </ListItemIcon>
-            <ListItemText primary={item.fileName} />
+            <ListItemText primary={item.fileTitle} />
           </ListItem>
           <DeleteButton item={item} deleteFile={props.deleteFile}/>
         </li>
       ))}
-    <Divider />
+    {/*<Divider />*/}
     </List>
   </ul>
   );

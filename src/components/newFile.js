@@ -32,7 +32,7 @@ const NewFile = (props) => {
     
     const classes = useStyles();
     return (
-        <Grid container xs={6}>
+        <div>
           <TextField
             id="standard-name"
             label="Name"
@@ -44,7 +44,7 @@ const NewFile = (props) => {
           <Button onClick={addFile} variant="contained" color="primary" className={classes.button}>
             Add File
           </Button>
-        </Grid>
+        </div>
     );
 }
 

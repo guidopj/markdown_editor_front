@@ -7,6 +7,8 @@ import * as markdownFilesActions from './actions/markdownFilesActions'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import  NewFile  from './components/newFile'
+import InputLabel from '@material-ui/core/InputLabel';
+import Textarea from 'react-expanding-textarea'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -23,6 +25,11 @@ const useStyles = makeStyles(theme => ({
     marginLeft: theme.spacing(1),
     marginRight: theme.spacing(1),
     width: 200,
+  },
+
+  textArea:{
+    height:300,
+    width:"90%"
   },
 
   label: {
@@ -54,26 +61,32 @@ const App = (props) => {
   const classes = useStyles();
   return (
     <div className={classes.root}>
-      <Grid container direction="column" justify="flex-end" alignItems="flex-start">
+        
+      <Grid container direction="column" justify="center" alignItems="center">
         <Grid item className={classes.title}>
           <h2> MarkDown Editor</h2>
         </Grid>
-        <Grid item xs={3}>
-          <FileListComponent deleteFile={props.markdownFilesActions.deleteMarkdownFile} data={props.markdownFilesList} className={classes.fileList}/>
-        </Grid>
-        <NewFile createFile={props.markdownFilesActions.createMarkdownFile}/>
-      </Grid>
       
-      {/*<Grid container direction="row" justify="flex-start" alignItems="flex-start">
-        <Grid item xs={4}>
-            <Textarea value={fileShown.fileDescription} className={classes.textArea}
-              onChange={e => setTextAreaValue(e.target.value)}/>
-        </Grid>
-        <Grid item xs={4} className={classes.label}>
-          <InputLabel>{fileShown.fileDescription}</InputLabel>
-        </Grid>
-        
-  </Grid>  */}
+        <Grid container direction="row" justify="flex-start" alignItems="flex-start">
+          <Grid item xs={4}>
+              <FileListComponent deleteFile={props.markdownFilesActions.deleteMarkdownFile}
+                                 data={props.markdownFilesList}
+                                 className={classes.fileList}
+                                 setTextAreaValue={setTextAreaValue}
+                                 setFileShown={setFileShown}/>
+            </Grid>
+              <Grid item xs={4}>
+                <Textarea value={textAreaValue} className={classes.textArea}
+                  onChange={e => setTextAreaValue(e.target.value)}/>
+              </Grid>
+              <Grid item xs={3} className={classes.label}>
+                <label>{textAreaValue}</label>
+              </Grid>
+              <Grid item xs={3}>
+                <NewFile createFile={props.markdownFilesActions.createMarkdownFile}/>
+              </Grid>
+            </Grid>
+          </Grid>
     </div>
   );
 }
