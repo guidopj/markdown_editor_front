@@ -16,6 +16,9 @@ const useStyles = makeStyles(theme => ({
     height: "100%",
     background: "#f0e68c"
   },
+  container:{
+    flexWrap:"inherit"
+  },
 
   button: {
     margin: theme.spacing(1),
@@ -32,13 +35,21 @@ const useStyles = makeStyles(theme => ({
   },
 
   title:{
+    backgroundColor:"grey",
+    color:"white",
     textAlign:"center",
-    height:100
+    width:"100%"
   },
 
   fileList: {
-    height: 300
+    backgroundColor:"cornsilk",
+    width:"100%"
+  },
+  fileListGrid:{
+    borderRight: "3px solid black"
   }
+
+  
 }));
 
 const App = (props) => {
@@ -55,29 +66,25 @@ const App = (props) => {
   const classes = useStyles();
   return (
     <div className={classes.root}>
-        
-      <Grid container direction="column" justify="center" alignItems="center">
-        <Grid item className={classes.title}>
-          <h2> MarkDown Editor</h2>
-        </Grid>
-      
-        <Grid container direction="row" justify="flex-start" alignItems="flex-start">
-          <Grid item xs={4}>
+      <Grid container direction="row" className={classes.container}>
+        <Grid container xs={3} direction="column" justify="flex-start" alignItems="flex-start" className={classes.fileListGrid}>
+          <Grid item className={classes.title}>
+            <h4> MarkDown Editor</h4>
+          </Grid>
+          
+          <Grid item className={classes.fileList}>
               <FileListComponent deleteFile={props.markdownFilesActions.deleteMarkdownFile}
                                  data={props.markdownFilesList}
-                                 className={classes.fileList}
                                  setFileShown={setFileShown}/>
-            </Grid>
-            
-            {!_.isEmpty(fileShown) ? <EditFile  editFile={props.markdownFilesActions.editMarkdownFile} 
-                                                fileShown={fileShown} /> : ''}
-                
-              <Grid item xs={6}>
-                <NewFile createFile={props.markdownFilesActions.createMarkdownFile}/>
-              </Grid>
-
-            </Grid>
+          </Grid>  
+          <Grid item>
+            <NewFile createFile={props.markdownFilesActions.createMarkdownFile}/>
           </Grid>
+        </Grid>
+        
+          {!_.isEmpty(fileShown) ? <EditFile  editFile={props.markdownFilesActions.editMarkdownFile} 
+                                                fileShown={fileShown} /> : <Grid xs={10}></Grid>}
+        </Grid>
     </div>
   );
 }

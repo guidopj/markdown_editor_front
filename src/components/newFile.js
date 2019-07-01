@@ -7,6 +7,7 @@ import Grid from '@material-ui/core/Grid';
 const useStyles = makeStyles(theme => ({
     button: {
         margin: theme.spacing(1),
+        fontSize:12
       },
     
     textField: {
@@ -26,6 +27,7 @@ const NewFile = (props) => {
             fileTitle: "",
             fileDescription: ""
         }
+        setName("")
         
         props.createFile(file);
     }
